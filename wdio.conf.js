@@ -2,7 +2,7 @@ exports.config = {
   user: process.env.BROWSERSTACK_USERNAME,
   key: process.env.BROWSERSTACK_ACCESS_KEY,
   updateJob: false,
-  specs: ["./lib/paypal-button-click.test.js"],
+  specs: ["./__tests__/*.ts"],
   exclude: [],
   maxInstances: 10,
   commonCapabilities: {
@@ -25,9 +25,7 @@ exports.config = {
   ],
   logLevels: {
     webdriver: "info",
-    "@wdio/browserstack-service": "info",
   },
-  services: ["browserstack"],
   coloredLogs: true,
   screenshotPath: "./errorShots/",
   baseUrl: "",
