@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "WebdriverIO boilerplate using WebdriverIO, Mocha, and TypeScript",
   "scripts": {
-    "test": "npm run build && wdio ./wdio.conf.js",
+    "test": "npm run test-stage-onprem",
     "build": "tsc -p .",
     "prepare": "husky install",
     "lint": "eslint --ext .js,.ts .",
