@@ -11,6 +11,7 @@
     "test-stage-bs": "wdio resources/config/wdio.stage.browserstack.conf.ts",
     "test-stage-onprem": "wdio resources/config/wdio.stage.on-prem.conf.ts",
     "test-prod-bs": "wdio resources/config/wdio.prod.browserstack.conf.ts"
+    "format": "prettier --write --ignore-unknown ."
   },
   "license": "Apache-2.0",
   "dependencies": {
