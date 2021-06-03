@@ -33,4 +33,10 @@ export const config = {
       browser.takeScreenshot();
     }
   },
+  before: function (): void {
+    browser.addCommand("switchWindowForCheckout", function () {
+      const windows: string[] = browser.getWindowHandles();
+      browser.switchToWindow(windows[1]);
+    });
+  },
 };

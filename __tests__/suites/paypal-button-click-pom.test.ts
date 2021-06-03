@@ -16,7 +16,7 @@ describe("Testing Paypal buttons", () => {
     const homePage = new HomePage();
     homePage.clickPaypalButton();
 
-    switchWindow();
+    browser.switchWindowForCheckout(); //custom command
 
     const checkoutPage = new CheckoutPage();
     checkoutPage.loginUsingPhoneNumber("1234567890");

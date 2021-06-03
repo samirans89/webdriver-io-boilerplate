@@ -17,7 +17,7 @@ describe("Testing Paypal buttons", () => {
 
   it("should start payment flow when clicking on paypal button", () => {
     checkoutWithPaypal();
-    switchWindow();
+    browser.switchWindowForCheckout(); //custom command
     loginWithPhoneNumber("1234567890");
     const text = getWarningText();
     expect(text).to.be.equals(
