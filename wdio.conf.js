@@ -2,7 +2,10 @@ exports.config = {
   user: process.env.BROWSERSTACK_USERNAME,
   key: process.env.BROWSERSTACK_ACCESS_KEY,
   updateJob: false,
-  specs: ["./lib/paypal-button-click.test.js"],
+  specs: [
+    "./__tests__/suites/paypal-button-click-pom.test.ts",
+    "./__tests__/suites/paypal-button-click.test.ts",
+  ],
   exclude: [],
   maxInstances: 10,
   commonCapabilities: {
@@ -11,12 +14,14 @@ exports.config = {
 
   capabilities: [
     {
+      build: "test build",
       browser: "chrome",
       browser_version: "90.0",
       os: "Windows",
       os_version: "10",
     },
     {
+      build: "test build",
       browser: "Firefox",
       browser_version: "latest",
       os: "Windows",
@@ -27,12 +32,11 @@ exports.config = {
     webdriver: "info",
     "@wdio/browserstack-service": "info",
   },
-  services: ["browserstack"],
   coloredLogs: true,
   screenshotPath: "./errorShots/",
   baseUrl: "",
   waitforTimeout: 10000,
-  connectionRetryTimeout: 90000,
+  connectionRetryTimeout: 30000,
   connectionRetryCount: 3,
   host: "hub.browserstack.com",
 
