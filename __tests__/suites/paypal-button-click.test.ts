@@ -1,37 +1,38 @@
 import { expect } from "chai";
+import { switchWindow } from "../util/common";
 
 describe("Testing Paypal buttons", () => {
-  beforeEach(async () => {
-    await browser.url(
-      "https://developer.paypal.com/demo/checkout/#/pattern/client"
-    );
+  beforeEach("Open StackDemo", () => {
+    browser.url("https://developer.paypal.com/demo/checkout/#/pattern/client");
   });
 
-  it("should start payment flow when clicking on paypal button", async () => {
-    const pageTitle = await browser.getTitle();
-    expect(pageTitle).to.equal("Smart Payment Buttons Integration");
+  afterEach("clear sessionstorage", () => {
+    browser.execute(() => sessionStorage.clear());
+  });
 
-    const frame = await browser.$("div#paypal-button-container iframe");
+  it("should start payment flow when clicking on paypal button", () => {
+    const frame = $("div#paypal-button-container iframe");
+    frame.waitForDisplayed();
+    browser.switchToFrame(frame);
+    const paypalButton = $('[data-funding-source="paypal"]');
+    paypalButton.waitForDisplayed();
+    paypalButton.click();
+    browser.switchToParentFrame();
 
-    await browser.switchToFrame(frame);
-    const paypalButton = await browser.$('[data-funding-source="paypal"]');
-    await paypalButton.waitForDisplayed();
+    switchWindow();
 
-    const isButtonDisplayed = await paypalButton.isDisplayed();
-    expect(isButtonDisplayed).to.equal(true);
+    const phoneTextField = $("#email");
+    phoneTextField.waitForDisplayed();
+    phoneTextField.setValue("1234567890");
+    const nextButton = $("#btnNext");
+    nextButton.waitForClickable({ timeout: 5000 });
+    nextButton.click();
 
-    await paypalButton.click();
-    await browser.switchToParentFrame();
-
-    let windows: string[] = await browser.getWindowHandles();
-    expect(windows.length).to.equal(2);
-
-    await browser.switchToWindow(windows[1]);
-
-    const emailTextField = await browser.$("#email");
-    await emailTextField.waitForDisplayed();
-
-    const loginPageTitle = await browser.getTitle();
-    expect(loginPageTitle).to.equal("Log in to your PayPal account");
+    const notificationWarning = $("#content > div.notifications > p");
+    notificationWarning.waitForDisplayed();
+    const text = notificationWarning.getText();
+    expect(text).to.be.equals(
+      "You haven’t confirmed your mobile yet. Use your email for now."
+    );
   });
 });
