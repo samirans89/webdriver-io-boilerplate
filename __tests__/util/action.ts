@@ -6,8 +6,7 @@ export function switchToPaypalFrame(): void {
 
 export function clickPaypalButton(): void {
   const paypalButton = $('[data-funding-source="paypal"]');
-  paypalButton.waitForDisplayed();
-  paypalButton.click();
+  paypalButton.waitAndClick();
 }
 
 export function enterPhoneNumber(phoneNumber: string): void {
@@ -20,8 +19,7 @@ export function enterPhoneNumber(phoneNumber: string): void {
 
 export function clickNextButton(): void {
   const nextButton = $("#btnNext");
-  nextButton.waitForClickable({ timeout: 5000 });
-  nextButton.click();
+  nextButton.waitAndClick();
 }
 
 export function getWarningText(): string {

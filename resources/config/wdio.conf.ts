@@ -1,4 +1,4 @@
-import { switchWindow } from "../../__tests__/util/common";
+import { switchWindow, waitAndClick } from "../../__tests__/util/common";
 
 export const config = {
   runner: "local",
@@ -37,5 +37,6 @@ export const config = {
   },
   before: function (): void {
     browser.addCommand("switchWindowForCheckout", switchWindow);
+    browser.addCommand("waitAndClick", waitAndClick, true);
   },
 };

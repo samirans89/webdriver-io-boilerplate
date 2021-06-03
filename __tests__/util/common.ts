@@ -10,6 +10,12 @@ export function switchWindow(): void {
   browser.switchToWindow(windows[1]);
 }
 
+export function waitAndClick(): void {
+  this.waitForDisplayed();
+  this.waitForClickable({ timeout: 5000 });
+  this.click();
+}
+
 export function checkoutWithPaypal(): void {
   switchToPaypalFrame();
   clickPaypalButton();
