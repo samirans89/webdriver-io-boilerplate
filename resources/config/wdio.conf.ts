@@ -1,3 +1,5 @@
+import { switchWindow } from "../../__tests__/util/common";
+
 export const config = {
   runner: "local",
   specs: ["__tests__/**/*.test.ts"],
@@ -34,9 +36,6 @@ export const config = {
     }
   },
   before: function (): void {
-    browser.addCommand("switchWindowForCheckout", function () {
-      const windows: string[] = browser.getWindowHandles();
-      browser.switchToWindow(windows[1]);
-    });
+    browser.addCommand("switchWindowForCheckout", switchWindow);
   },
 };

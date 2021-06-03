@@ -1,7 +1,6 @@
 import { expect } from "chai";
 import { CheckoutPage } from "../pages/checkoutPage";
 import { HomePage } from "../pages/homePage";
-import { switchWindow } from "../util/common";
 
 describe("Testing Paypal buttons", () => {
   beforeEach("Open StackDemo", () => {

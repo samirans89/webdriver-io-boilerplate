@@ -1,10 +1,6 @@
 import { expect } from "chai";
 import { getWarningText } from "../util/action";
-import {
-  checkoutWithPaypal,
-  loginWithPhoneNumber,
-  switchWindow,
-} from "../util/common";
+import { checkoutWithPaypal, loginWithPhoneNumber } from "../util/common";
 
 describe("Testing Paypal buttons", () => {
   beforeEach("Open StackDemo", () => {
