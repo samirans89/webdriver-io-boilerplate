@@ -3,7 +3,7 @@ import { switchWindow } from "../util/common";
 
 describe("Testing Paypal buttons", () => {
   beforeEach("Open StackDemo", () => {
-    browser.url("https://developer.paypal.com/demo/checkout/#/pattern/client");
+    browser.url("/demo/checkout/#/pattern/client");
   });
 
   afterEach("clear sessionstorage", () => {
