@@ -3,19 +3,25 @@ import * as _ from "lodash";
 import * as parseArgs from "minimist";
 
 const epochTime = new Date().getTime();
+const testName =
+  parseArgs(process.argv.slice(2))["bstack-session-name"] || "default_name";
 
 const overrides = {
   user: process.env.BROWSERSTACK_USERNAME || "BROWSERSTACK_USERNAME",
   key: process.env.BROWSERSTACK_ACCESS_KEY || "BROWSERSTACK_ACCESS_KEY",
   specs: ["__tests__/**/*.test.ts"],
   host: "hub.browserstack.com",
-  maxInstances: 5,
-  commonCapabilties: {
-    maxInstances: 5,
+  maxInstances: 25,
+  commonCapabilities: {
     "browserstack.maskCommands": "setValues, getValues, setCookies, getCookies",
     "browserstack.debug": true,
     "browserstack.video": true,
-    "browserstack.networkLogs": true,
+    "browserstack.networkLogs": false,
+    name: testName,
+    build:
+      process.env.BROWSERSTACK_BUILD_NAME ||
+      "webdriver-io-boilerplate" + " - " + epochTime,
+    acceptInsecureCerts: true,
   },
   capabilities: [
     {
@@ -23,41 +29,51 @@ const overrides = {
       os_version: "Catalina",
       browserName: "Chrome",
       browser_version: "latest",
-      acceptInsecureCerts: true,
-      name:
-        parseArgs(process.argv.slice(2))["bstack-session-name"] ||
-        "default_name",
-      build:
-        process.env.BROWSERSTACK_BUILD_NAME ||
-        "webdriver-io-boilerplate" + " - " + epochTime,
     },
     {
       os: "OS X",
       os_version: "Catalina",
       browserName: "Firefox",
       browser_version: "latest",
-      acceptInsecureCerts: true,
-      name:
-        parseArgs(process.argv.slice(2))["bstack-session-name"] ||
-        "default_name",
-      build:
-        process.env.BROWSERSTACK_BUILD_NAME ||
-        "webdriver-io-boilerplate" + " - " + epochTime,
+    },
+    {
+      os: "OS X",
+      os_version: "Catalina",
+      browserName: "Firefox",
+      browser_version: "latest",
+    },
+    {
+      os_version: "10.0",
+      device: "Samsung Galaxy S20",
+      real_mobile: "true",
+      browserName: "Android",
+    },
+    {
+      os_version: "11.0",
+      device: "Google Pixel 4",
+      real_mobile: "true",
+      browserName: "Android",
+    },
+    {
+      os_version: "11.0",
+      device: "Google Pixel 5",
+      real_mobile: "true",
+      browserName: "Android",
     },
   ],
-  afterTest: function (
+  afterTest: async function (
     test: { title: string },
-    context: Record<string, unknown>,
+    _context: Record<string, unknown>,
     { passed }: Record<string, unknown>
   ) {
     if (parseArgs(process.argv.slice(2))["bstack-session-name"]) {
-      browser.executeScript(
+      await browser.executeScript(
         'browserstack_executor: {"action": "setSessionName", "arguments": {"name":"' +
           parseArgs(process.argv.slice(2))["bstack-session-name"] +
           '" }}'
       );
     } else {
-      browser.executeScript(
+      await browser.executeScript(
         'browserstack_executor: {"action": "setSessionName", "arguments": {"name":"' +
           test.title +
           '" }}'
@@ -65,16 +81,21 @@ const overrides = {
     }
 
     if (passed) {
-      browser.executeScript(
+      await browser.executeScript(
         'browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"passed","reason": "Assertions passed"}}'
       );
     } else {
-      browser.takeScreenshot();
-      browser.executeScript(
-        'browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed","reason": "At least 1 assertion failed."}}'
+      await browser.takeScreenshot();
+      await browser.executeScript(
+        'browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed","reason": "At least 1 assertion failed." }}'
       );
     }
   },
 };
 
 export const config = _.defaultsDeep(overrides, defaultConfig);
+
+config.capabilities.forEach(function (caps: { [x: string]: unknown }) {
+  for (const i in config.commonCapabilities)
+    caps[i] = caps[i] || config.commonCapabilities[i];
+});

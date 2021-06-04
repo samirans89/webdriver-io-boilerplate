@@ -3,43 +3,37 @@ import { Page } from "./basePage";
  * sub page containing specific selectors and methods for a specific page
  */
 export class CheckoutPage extends Page {
-  /**
-   * define selectors using getter methods
-   */
-  get loginText(): WebdriverIO.Element {
-    return $("#email");
+  async notificationWarning(): Promise<WebdriverIOAsync.Element> {
+    return await $("#content > div.notifications > p");
   }
 
-  get nextButton(): WebdriverIO.Element {
-    return $("#btnNext");
+  async _inputPhoneNumber(phoneNumber: string): Promise<void> {
+    const email = await $("#email");
+    await email.waitForClickable();
+    await email.setValue(phoneNumber);
   }
 
-  get notificationWarning(): WebdriverIO.Element {
-    return $("#content > div.notifications > p");
-  }
-
-  _inputPhoneNumber(phoneNumber: string): void {
-    this.loginText.waitForClickable({ timeout: 5000 });
-    browser.pause(5000);
-    this.loginText.setValue(phoneNumber);
-  }
-
-  isNotification(notificationText: string): boolean {
-    this.notificationWarning.waitForDisplayed();
-    const text = this.notificationWarning.getText();
+  async isNotification(notificationText: string): Promise<boolean> {
+    const notificationWarningLabel = await $(
+      "#content > div.notifications > p"
+    );
+    await notificationWarningLabel.waitForDisplayed();
+    await browser.pause(5000);
+    const text = await notificationWarningLabel.getText();
     return text === notificationText;
   }
 
-  _clickNextButton(): void {
-    this.nextButton.waitAndClick();
+  async _clickNextButton(): Promise<void> {
+    const nextButton = await $("#btnNext");
+    await nextButton.waitAndClick();
   }
 
-  loginUsingPhoneNumber(phoneNumber: string): void {
-    this._inputPhoneNumber(phoneNumber);
-    this._clickNextButton();
+  async loginUsingPhoneNumber(phoneNumber: string): Promise<void> {
+    await this._inputPhoneNumber(phoneNumber);
+    await this._clickNextButton();
   }
 
-  open(): string {
-    return super.open("");
+  async open(): Promise<void> {
+    return await super.open("");
   }
 }

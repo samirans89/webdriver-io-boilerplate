@@ -14,7 +14,7 @@ export const config = {
   coloredLogs: true,
   bail: 0,
   baseUrl: "https://developer.paypal.com",
-  waitforTimeout: 60000,
+  waitforTimeout: 30000,
   connectionRetryTimeout: 120000,
   chromeOptions: {
     prefs: {
@@ -24,13 +24,13 @@ export const config = {
   framework: "mocha",
   mochaOpts: {
     ui: "bdd",
-    timeout: 60000,
+    timeout: 150000,
   },
   afterTest: function (
-    test: any,
-    context: any,
-    { error, result, duration, passed, retries }: any
-  ) {
+    _test: Record<string, unknown>,
+    _context: Record<string, unknown>,
+    { error }: Record<string, unknown>
+  ): void {
     if (error) {
       browser.takeScreenshot();
     }
