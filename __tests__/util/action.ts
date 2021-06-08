@@ -24,7 +24,6 @@ export async function clickNextButton(): Promise<void> {
 export async function getWarningText(): Promise<string> {
   const notificationWarning = await $("#content > div.notifications > p");
   await notificationWarning.waitForDisplayed();
-  await browser.pause(5000);
   const text = await notificationWarning.getText();
   return text;
 }

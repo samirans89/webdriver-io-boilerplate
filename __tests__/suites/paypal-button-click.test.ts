@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { getWarningText } from "../util/action";
 import { checkoutWithPaypal, loginWithPhoneNumber } from "../util/common";
 
-describe("Testing Paypal buttons", async () => {
+describe("Testing Paypal buttons", () => {
   beforeEach("Open StackDemo", async () => {
     await browser.url("/demo/checkout/#/pattern/client");
   });

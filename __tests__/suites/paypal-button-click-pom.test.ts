@@ -2,7 +2,7 @@ import { expect } from "chai";
 import { CheckoutPage } from "../pages/checkoutPage";
 import { HomePage } from "../pages/homePage";
 
-describe("Testing Paypal buttons", async () => {
+describe("Testing Paypal buttons", () => {
   beforeEach("Open StackDemo", async () => {
     await browser.url("/demo/checkout/#/pattern/client");
   });

@@ -93,9 +93,9 @@ const overrides = {
   },
 };
 
-export const config = _.defaultsDeep(overrides, defaultConfig);
-
-config.capabilities.forEach(function (caps: { [x: string]: unknown }) {
+overrides.capabilities.forEach(function (caps: { [x: string]: unknown }) {
   for (const i in config.commonCapabilities)
     caps[i] = caps[i] || config.commonCapabilities[i];
 });
+
+export const config = _.defaultsDeep(overrides, defaultConfig);

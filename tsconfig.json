@@ -12,6 +12,6 @@
     "resolveJsonModule": true,
     "strictNullChecks": true,
     "skipLibCheck": true,
-    "types": ["node", "webdriverio", "mocha", "chai"]
+    "types": ["node", "webdriverio/async", "mocha", "chai"]
   }
 }

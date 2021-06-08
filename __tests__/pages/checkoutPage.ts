@@ -18,7 +18,6 @@ export class CheckoutPage extends Page {
       "#content > div.notifications > p"
     );
     await notificationWarningLabel.waitForDisplayed();
-    await browser.pause(5000);
     const text = await notificationWarningLabel.getText();
     return text === notificationText;
   }
