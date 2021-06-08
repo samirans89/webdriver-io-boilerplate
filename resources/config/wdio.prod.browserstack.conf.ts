@@ -12,6 +12,7 @@ const overrides = {
   specs: ["__tests__/**/*.test.ts"],
   host: "hub.browserstack.com",
   maxInstances: 25,
+  baseUrl: "https://developer.paypal.com",
   commonCapabilities: {
     "browserstack.maskCommands": "setValues, getValues, setCookies, getCookies",
     "browserstack.debug": true,
@@ -93,9 +94,11 @@ const overrides = {
   },
 };
 
-overrides.capabilities.forEach(function (caps: { [x: string]: unknown }) {
-  for (const i in config.commonCapabilities)
-    caps[i] = caps[i] || config.commonCapabilities[i];
+const tmpConfig = _.defaultsDeep(overrides, defaultConfig);
+
+tmpConfig.capabilities.forEach(function (caps: { [x: string]: unknown }) {
+  for (const i in tmpConfig.commonCapabilities)
+    caps[i] = caps[i] || tmpConfig.commonCapabilities[i];
 });
 
-export const config = _.defaultsDeep(overrides, defaultConfig);
+export const config = tmpConfig;

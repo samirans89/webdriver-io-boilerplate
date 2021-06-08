@@ -12,7 +12,7 @@ const overrides = {
   key: process.env.BROWSERSTACK_ACCESS_KEY || "BROWSERSTACK_ACCESS_KEY",
   specs: ["__tests__/**/*.test.ts"],
   host: "hub.browserstack.com",
-  baseUrl: "https://developer.paypal.com",
+  baseUrl: "https://<internal>.developer.paypal.com",
   waitforTimeout: 50000,
   maxInstances: 5,
   commonCapabilities: {
@@ -88,9 +88,11 @@ const overrides = {
   },
 };
 
-overrides.capabilities.forEach(function (caps: { [x: string]: unknown }) {
-  for (const i in config.commonCapabilities)
-    caps[i] = caps[i] || config.commonCapabilities[i];
+const tmpConfig = _.defaultsDeep(overrides, defaultConfig);
+
+tmpConfig.capabilities.forEach(function (caps: { [x: string]: unknown }) {
+  for (const i in tmpConfig.commonCapabilities)
+    caps[i] = caps[i] || tmpConfig.commonCapabilities[i];
 });
 
-export const config = _.defaultsDeep(overrides, defaultConfig);
+export const config = tmpConfig;
