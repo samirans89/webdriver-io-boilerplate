@@ -62,10 +62,10 @@ const overrides = {
       });
     });
   },
-  afterTest: function (
+  afterTest: async function (
     _test: Record<string, unknown>,
     _context: Record<string, unknown>,
-    { passed }: Record<string, unknown>
+    { passed, error }: Record<string, unknown>
   ) {
     if (parseArgs(process.argv.slice(2))["bstack-session-name"]) {
       browser.executeScript(
@@ -81,8 +81,13 @@ const overrides = {
       );
     } else {
       browser.takeScreenshot();
-      browser.executeScript(
-        'browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed","reason": "At least 1 assertion failed."}}'
+      const reason =
+        "At least 1 assertion failed: " +
+        (error as string).toString().replace(/['"]+/g, "");
+      await browser.executeScript(
+        'browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed","reason": "' +
+          reason +
+          '"}}'
       );
     }
   },

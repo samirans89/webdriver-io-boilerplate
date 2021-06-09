@@ -65,7 +65,7 @@ const overrides = {
   afterTest: async function (
     test: { title: string },
     _context: Record<string, unknown>,
-    { passed }: Record<string, unknown>
+    { passed, error }: unknown
   ) {
     if (parseArgs(process.argv.slice(2))["bstack-session-name"]) {
       await browser.executeScript(
@@ -87,8 +87,13 @@ const overrides = {
       );
     } else {
       await browser.takeScreenshot();
+      const reason =
+        "At least 1 assertion failed: " +
+        (error as string).toString().replace(/['"]+/g, "");
       await browser.executeScript(
-        'browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed","reason": "At least 1 assertion failed." }}'
+        'browserstack_executor: {"action": "setSessionStatus", "arguments": {"status":"failed","reason": "' +
+          reason +
+          '"}}'
       );
     }
   },

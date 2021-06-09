@@ -6,8 +6,11 @@ import {
 } from "./action";
 
 export async function switchWindow(): Promise<void> {
+  await browser.pause(3000);
   const windows: string[] = await browser.getWindowHandles();
-  await browser.switchToWindow(windows[1]);
+  if (windows.length === 2) {
+    await browser.switchToWindow(windows[1]);
+  }
 }
 
 export async function waitAndClick(): Promise<void> {
