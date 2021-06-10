@@ -31,14 +31,14 @@ export const config = {
     timeout: 150000,
   },
   reporters: [
-    // [
-    //   "allure",
-    //   {
-    //     outputDir: "allure-results",
-    //     disableWebdriverStepsReporting: true,
-    //     disableWebdriverScreenshotsReporting: false,
-    //   },
-    // ],
+    [
+      "allure",
+      {
+        outputDir: "allure-results",
+        disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: false,
+      },
+    ],
     [
       "mochawesome",
       {
@@ -70,7 +70,6 @@ export const config = {
     browser.addCommand("waitAndClick", waitAndClick, true);
   },
   onComplete: function (): void {
-    console.log("on complete called...");
     mergeResults("./mocha-report", "results-*");
   },
 };

@@ -7,3 +7,5 @@ local-*.log
 .tsbuild
 mocha-report/
 mochawesome-report/
+allure-report/
+allure-results/
