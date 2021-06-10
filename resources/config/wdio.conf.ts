@@ -31,14 +31,14 @@ export const config = {
     timeout: 150000,
   },
   reporters: [
-    // [
-    //   "allure",
-    //   {
-    //     outputDir: "allure-results",
-    //     disableWebdriverStepsReporting: true,
-    //     disableWebdriverScreenshotsReporting: false,
-    //   },
-    // ],
+    [
+      "allure",
+      {
+        outputDir: "allure-results",
+        disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: false,
+      },
+    ],
     [
       "mochawesome",
       {
