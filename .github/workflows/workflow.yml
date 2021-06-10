@@ -26,7 +26,7 @@ jobs:
         with:
           username: ${{ secrets.BROWSERSTACK_USERNAME }}
           access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-          build-name: ${{ env.GITHUB_SHA }}-${{ env.GITHUB_REF }}-BUILD_INFO
+          build-name: BUILD_INFO
           project-name: "REPO_NAME"
       - name: Run test
         continue-on-error: true
