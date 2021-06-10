@@ -70,7 +70,6 @@ export const config = {
     browser.addCommand("waitAndClick", waitAndClick, true);
   },
   onComplete: function (): void {
-    console.log("on complete called...");
     mergeResults("./mocha-report", "results-*");
   },
 };
