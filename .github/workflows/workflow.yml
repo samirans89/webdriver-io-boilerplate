@@ -26,11 +26,12 @@ jobs:
         with:
           username: ${{ secrets.BROWSERSTACK_USERNAME }}
           access-key: ${{ secrets.BROWSERSTACK_ACCESS_KEY }}
-          build-name: ${{ env.GITHUB_SHA }}-${{ env.GITHUB_REF }}
+          build-name: ${{ env.GITHUB_SHA }}-${{ env.GITHUB_REF }}-BUID_INFO
           project-name: "REPO_NAME"
-      - run:|
-        npm run test-prod-bstack
-        npm run generateMochawesome
+      - name: Run test and generate reports
+        run: |
+          npm run test-prod-bstack
+          npm run generateMochawesome
       - name: Archive mochawesome reports
         uses: actions/upload-artifact@v2
         with:
