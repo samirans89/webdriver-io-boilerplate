@@ -39,5 +39,5 @@ jobs:
           name: mochawesome-report
           path: mochawesome-report/
       - name: Check if tests have failed
-        if: steps.test.outcome == "failure"
+        if: steps.test.outcome == 'failure'
         run: exit 1
